@@ -2,14 +2,16 @@ import axios from 'axios';
 import React from 'react'
 import { useNavigate } from "react-router-dom"
 import { LISTING_API_ENDPOINT } from '../../utils/constant';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteListing } from '../redux-store/listingSlice';
 
 const ListingCard = ({ listing }) => {
     // console.log(listing);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const user = useSelector(store => store.user.user);
     // console.log(user);
-    
+
     const handleDetails = (id) => {
         console.log(id);
 
@@ -30,12 +32,27 @@ const ListingCard = ({ listing }) => {
         }
     }
 
+    const handleDeleteListing = async (id) => {
+        try {
+            const res = await axios.delete(`${LISTING_API_ENDPOINT}/${id}`,
+                {
+                    withCredentials: true
+                });
+            console.log(res);
+            console.log("listing deleted successfully");
+            dispatch(deleteListing(res?.data))
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
-        <div className="border border-gray-300 p-4 flex flex-row">
-            <div className="bg-gray-200 p-4 flex-1 items-center justify-center text-gray-500 border ">
-                <img src={listing?.img} alt="No image" />
+        <div className="border border-gray-300 p-4 flex flex-row shadow rounded-lg shadow-lg shadow-cyan-500/30">
+            <div className="bg-gray-200  md:h-56 flex-1 items-center justify-center text-gray-500  rounded-lg">
+                <img className="object-cover w-full h-full " src={listing?.image} alt="No image" />
             </div>
-            <div className="mt-0 flex-1 p-2">
+            <div className="mt-0 flex-1 pl-4">
                 <p className="font-bold">{listing?.postedByName}</p>
                 <p>📍{listing?.location}</p>
                 <p>City - {listing?.cityName}</p>
@@ -43,10 +60,14 @@ const ListingCard = ({ listing }) => {
                 <p>Looking for: {listing?.lookingForGender}</p>
                 <p>Looking for: {listing?.lookingForAccoType}</p>
                 <div className="flex justify-between flex-col md:flex-row">
-                    <button onClick={() => handleSaveForLater(listing?._id)} className="mt-4 flex items-center justify-center bg-gray-800 hover:bg-gray-600 text-white px-4 py-1 rounded-lg">
-                        save for later
+                    {user?._id != listing?.postedBy && <button onClick={() => handleSaveForLater(listing?._id)} className="mt-4 flex items-center justify-center bg-gray-800 hover:bg-gray-600 text-white px-4 py-1 rounded-lg">
+                        {/* save for later */}
+                        <img className="w-8 border rounded-md" src="https://png.pngtree.com/png-vector/20201226/ourmid/pngtree-line-icon-save-png-image_2644818.jpg" alt="" />
+                    </button>}
+                    {user?._id == listing?.postedBy && <button onClick={() => handleDeleteListing(listing?._id)} className="mt-4 flex items-center justify-center bg-gray-800 hover:bg-gray-600 text-white px-4 py-1 rounded-lg">
+                        delete
                         {/* <img className="w-8 border rounded-md" src="https://png.pngtree.com/png-vector/20201226/ourmid/pngtree-line-icon-save-png-image_2644818.jpg" alt="" /> */}
-                    </button>
+                    </button>}
                     <button onClick={() => handleDetails(listing?._id)} className="mt-4 bg-gray-800 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
                         Details
                     </button>

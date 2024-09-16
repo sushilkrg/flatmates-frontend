@@ -48,8 +48,8 @@ const TopNav = () => {
                 </div>
                 <div className="hidden md:flex space-x-8">
                     {user && <Link to="/add" className="hover:text-blue-400">Add Listing</Link>}
-                    {user && <Link to="/my-listing" className="hover:text-blue-400">My Listings</Link>}
-                    {user && <Link to="/savedforlater" className="hover:text-blue-400">Saved for later</Link>}
+                    {user && <Link to="/my-listings" className="hover:text-blue-400">My Listings</Link>}
+                    {user && <Link to="/saved-for-later" className="hover:text-blue-400">Saved for later</Link>}
                     {user && <Link to="/logout" onClick={handleLogout} className="hover:text-blue-400">Logout</Link>}
                     {!user && <Link to="/login" className="hover:text-blue-400">Login</Link>}
                     {!user && <Link to="/signup" className="hover:text-blue-400">Signup</Link>}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ListingCard from "../components/ListingCard";
 import useGetListings from "../hooks/useGetListings";
 import Listings from "../components/Listings";
@@ -13,8 +13,9 @@ const MainPage = () => {
 
   const [cityname, setCityname] = useState("");
   const { listings } = useSelector(store => store.listing);
-  const [allListings, setAllListings] = useState(listings);
+  const [allListings, setAllListings] = useState("");
   // const [filteredListings, setFilteredListings] = useState("");
+  const [selectLookingFor, setSelectLookingFor] = useState("");
 
 
   // const [filterFlag, setFilterFlag] = useState(false);
@@ -35,6 +36,13 @@ const MainPage = () => {
       console.log(error);
     }
   }
+
+  // useEffect(() => {
+
+  // }, [allListings])
+
+  // console.log(allListings);
+
 
   return (
     <div className="w-full p-4 md:p-6">
@@ -68,15 +76,28 @@ const MainPage = () => {
               Search
             </button>
           </form>
-          <button className="bg-gray-800 text-white px-6 py-2 rounded-lg w-full sm:w-auto">
-            Looking for
-          </button>
+          <div className="bg-gray-800 text-white  rounded-lg w-full sm:w-auto">
+            <select
+              name="lookingForGender"
+              id="lookingForGender"
+              value={selectLookingFor}
+              onChange={(e) => setSelectLookingFor(e.target.value)}
+              className="block w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              {/* <option value="" disabled>
+                Select gender
+              </option> */}
+              <option value="all">All</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
         </div>
       </div>
 
       {/* {!filteredListings && <Listings listings={listings} />} */}
       {/* <Listings listings={filteredListings} /> */}
-      <Listings listings={allListings} />
+      <Listings listings={listings} />
 
 
     </div>

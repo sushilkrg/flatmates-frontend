@@ -1,9 +1,10 @@
 import React from "react";
 import useGetListingDetails from "../hooks/useGetListingDetails";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { LISTING_API_ENDPOINT } from "../../utils/constant";
+import { deleteListing } from "../redux-store/listingSlice";
 
 const ListingDetails = () => {
 
@@ -12,6 +13,7 @@ const ListingDetails = () => {
 
   useGetListingDetails(id);
 
+  const dispatch = useDispatch();
   const user = useSelector((store) => store.user.user);
   const listingDetail = useSelector(store => store.listing.listingDetail);
   console.log(listingDetail);
@@ -32,12 +34,27 @@ const ListingDetails = () => {
     }
   }
 
+  const handleDeleteListing = async (id) => {
+    try {
+      const res = await axios.delete(`${LISTING_API_ENDPOINT}/${id}`,
+        {
+          withCredentials: true
+        });
+      console.log(res);
+      console.log("listing deleted successfully");
+      dispatch(deleteListing(res?.data))
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="w-full p-4 md:p-6 flex flex-col md:flex-row  ">
       {/* Image Section */}
       <div className="w-full md:w-1/2 p-4">
         <div className="bg-gray-200 h-64 flex items-center justify-center text-gray-500 rounded-lg">
-          <img src={listingDetail?.img} alt="No image" />
+          <img className="object-cover	w-full h-full" src={listingDetail?.image} alt="No image" />
         </div>
       </div>
 
@@ -56,9 +73,12 @@ const ListingDetails = () => {
         </p>
 
         {/* Save for Later Button */}
-        <button onClick={() => handleSaveForLater(listingDetail?._id)} className="mt-6 bg-gray-800 text-white px-6 py-2 rounded-lg">
+        {user?._id != listingDetail?.postedBy && <button onClick={() => handleSaveForLater(listingDetail?._id)} className="mt-6 bg-gray-800 text-white px-6 py-2 rounded-lg">
           Save for later
-        </button>
+        </button>}
+        {user?._id == listingDetail?.postedBy && <button onClick={() => handleDeleteListing(listingDetail?._id)} className="mt-6 bg-gray-800 text-white px-6 py-2 rounded-lg">
+          delete
+        </button>}
       </div>
     </div>
   );

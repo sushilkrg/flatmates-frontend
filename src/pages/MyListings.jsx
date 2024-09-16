@@ -1,0 +1,19 @@
+import React from 'react'
+import ListingCard from '../components/ListingCard'
+
+const MyListings = () => {
+  return (
+    <div className="">
+      <h2 className="text-center mt-4">My-Listings</h2>
+      <div className="container mx-auto p-4 space-y-4">
+
+        <ListingCard />
+        <ListingCard />
+        <ListingCard />
+      </div>
+
+    </div>
+  )
+}
+
+export default MyListings

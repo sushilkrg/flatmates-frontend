@@ -1,22 +1,19 @@
 import React from "react";
+import { toast } from 'react-hot-toast';
 import useGetListingDetails from "../hooks/useGetListingDetails";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { LISTING_API_ENDPOINT } from "../../utils/constant";
+import { LISTING_API_ENDPOINT } from "../utils/constant";
 import { deleteListing } from "../redux-store/listingSlice";
 
 const ListingDetails = () => {
 
   const { id } = useParams();
-  // console.log(id);
-
   useGetListingDetails(id);
-
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user.user);
   const listingDetail = useSelector(store => store.listing.listingDetail);
-  console.log(listingDetail);
 
   const handleSaveForLater = async (id) => {
     try {
@@ -27,8 +24,7 @@ const ListingDetails = () => {
           withCredentials: true,
         }
       );
-      console.log(res);
-      console.log("save for later added");
+      toast.success(res?.data?.message);
     } catch (error) {
       console.log(error);
     }
@@ -40,17 +36,15 @@ const ListingDetails = () => {
         {
           withCredentials: true
         });
-      console.log(res);
-      console.log("listing deleted successfully");
-      dispatch(deleteListing(res?.data))
-
+      toast.success(res?.data?.message);
+      dispatch(deleteListing(res?.data?.listing))
     } catch (error) {
       console.log(error);
     }
   }
 
   return (
-    <div className="w-full p-4 md:p-6 flex flex-col md:flex-row  ">
+    <div className="w-full min-h-[90vh] p-4 md:p-6 flex flex-col md:flex-row  ">
       {/* Image Section */}
       <div className="w-full md:w-1/2 p-4">
         <div className="bg-gray-200 h-64 flex items-center justify-center text-gray-500 rounded-lg">
@@ -68,6 +62,7 @@ const ListingDetails = () => {
         <p>Looking for - {listingDetail?.lookingForGender}</p>
         <p>Looking for - {listingDetail?.lookingForAccoType}</p>
         <p>Contact No - {listingDetail?.contactNumber}</p>
+        
         <p>
           Facilities - {listingDetail?.facilities?.map((facility) => <span key={facility}> {facility} </span>)}
         </p>

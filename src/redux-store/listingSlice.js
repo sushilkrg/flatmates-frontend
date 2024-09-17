@@ -25,7 +25,10 @@ const listingSlice = createSlice({
     },
     deleteListing: (state, action) => {
       state.listings = state.listings.filter(
-        (listing) => listing.id !== action.payload
+        (listing) => listing._id !== action.payload._id
+      );
+      state.myListings = state.myListings.filter(
+        (listing) => listing._id !== action.payload._id
       );
     },
     setAllListings: (state, action) => {
@@ -35,21 +38,8 @@ const listingSlice = createSlice({
       state.myListings = action.payload;
     },
     setSavedForLaterListings: (state, action) => {
-      state.savedForLaterListings = action.payload;
+        state.savedForLaterListings = action.payload;
     },
-
-    // Action to start a loading state
-    //  startLoading: (state) => {
-    //     state.loading = true;
-    //   },
-    // Action to stop a loading state
-    //   stopLoading: (state) => {
-    //     state.loading = false;
-    //   },
-    // Action to set an error message
-    //   setError: (state, action) => {
-    //     state.error = action.payload;
-    //   },
   },
 });
 

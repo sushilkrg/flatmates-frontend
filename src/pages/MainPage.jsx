@@ -1,62 +1,51 @@
-import React, { useEffect, useState } from "react";
-import ListingCard from "../components/ListingCard";
+import React, { useState } from "react";
 import useGetListings from "../hooks/useGetListings";
 import Listings from "../components/Listings";
-import { LISTING_API_ENDPOINT } from "../../utils/constant";
+import { LISTING_API_ENDPOINT } from "../utils/constant";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { setFilteredListings } from "../redux-store/listingSlice";
 import { useSelector } from 'react-redux'
 
 const MainPage = () => {
 
-
-  const [cityname, setCityname] = useState("");
   const { listings } = useSelector(store => store.listing);
-  const [allListings, setAllListings] = useState("");
+  const [cityname, setCityname] = useState("");
+  const [allListings, setAllListings] = useState(listings);
+
   // const [filteredListings, setFilteredListings] = useState("");
-  const [selectLookingFor, setSelectLookingFor] = useState("");
+  const [selectLookingFor, setSelectLookingFor] = useState("all");
 
-
-  // const [filterFlag, setFilterFlag] = useState(false);
   useGetListings();
   // const dispatch = useDispatch();
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
+  const getFilteredListings = async () => {
     try {
-      const res = await axios.get(`${LISTING_API_ENDPOINT}/search/${cityname}`);
-      console.log(res.data.filteredListings);
-      setAllListings(res.data.filteredListings);
-      // dispatch(setFilteredListings(res?.data?.filteredListings));
-      // setCityname("");
-      // setFilterFlag(true);
-      // redirect(`/search/${cityname}`);
+      const res = await axios.get(`${LISTING_API_ENDPOINT}/filter`, { cityname: cityname, lookingFor: selectLookingFor });
     } catch (error) {
       console.log(error);
     }
   }
 
-  // useEffect(() => {
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.get(`${LISTING_API_ENDPOINT}/filter`, { params: { cityname: cityname, lookingFor: selectLookingFor } });
+      setAllListings(res?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  // }, [allListings])
-
-  // console.log(allListings);
-
+  const handleAllListings = () => {
+    setAllListings(listings);
+    setCityname("");
+  }
 
   return (
-    <div className="w-full p-4 md:p-6">
-      {/* Navigation Bar */}
-
-      {/* <div className="flex justify-around border-b-2 border-gray-800 pb-4 mb-6">
-        <span className="cursor-pointer font-bold underline">All listings</span>
-        <span className="cursor-pointer">Flatmates</span>
-        <span className="cursor-pointer">Roommates</span>
-      </div> */}
+    <div className="w-full min-h-screen p-4 md:p-6">
       {/* Search and Filter */}
       <div className="flex flex-row justify-around  mb-6">
         <div className="grid grid-col-1 md:grid-cols-3 gap-2 mx-3">
-          <button onClick={() => setAllListings(listings)} className="cursor-pointer font-bold underline">All listings</button>
+          <button onClick={handleAllListings} className="cursor-pointer font-bold underline">All listings</button>
           <button className="cursor-pointer">Flatmates</button>
           <button className="cursor-pointer">Roommates</button>
         </div>
@@ -84,9 +73,6 @@ const MainPage = () => {
               onChange={(e) => setSelectLookingFor(e.target.value)}
               className="block w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
-              {/* <option value="" disabled>
-                Select gender
-              </option> */}
               <option value="all">All</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -95,11 +81,8 @@ const MainPage = () => {
         </div>
       </div>
 
-      {/* {!filteredListings && <Listings listings={listings} />} */}
-      {/* <Listings listings={filteredListings} /> */}
-      <Listings listings={listings} />
-
-
+      {!allListings && <Listings listings={listings} />}
+      {allListings && <Listings listings={allListings} />}
     </div>
   );
 };

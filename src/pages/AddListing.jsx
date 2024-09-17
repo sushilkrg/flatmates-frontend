@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { LISTING_API_ENDPOINT } from "../../utils/constant"
+import { LISTING_API_ENDPOINT } from "../utils/constant"
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const AddListing = () => {
 
@@ -28,17 +29,6 @@ const AddListing = () => {
     });
   };
 
-  // const handleImgChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       setPostImg(reader.result);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
-
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -49,13 +39,6 @@ const AddListing = () => {
       reader.readAsDataURL(file);
     }
   };
-  // main fn
-  // const handleImageUpload = (e) => {
-  //   setFormData({
-  //     ...formData,
-  //     image: e.target.files[0],
-  //   });
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -88,26 +71,23 @@ const AddListing = () => {
           image: image,
         }),
       });
-      console.log(res);
+      toast.success(res?.data?.message);
       navigate("/");
     } catch (error) {
       console.log(error);
-
     }
-    console.log("Form Data Submitted:", formData);
-    // Implement form submission logic here
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-10">
-      <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
+    <div className="max-w-3xl mx-auto p-8 bg-gray-900 shadow-lg rounded-lg mt-10">
+      <h2 className="text-3xl font-semibold  mb-6 text-center">
         Add Listing
       </h2>
       <form onSubmit={handleSubmit} className="space-y-6">
 
         {/* Select Image */}
         <div className="flex flex-col">
-          <label htmlFor="image" className="text-gray-700 font-medium mb-2">
+          <label htmlFor="image" className=" font-medium mb-2">
             Upload Image
           </label>
           <input
@@ -116,14 +96,13 @@ const AddListing = () => {
             id="image"
             accept="image/*"
             onChange={handleImageUpload}
-            className="block w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-
+            className="block w-full px-3 py-2 border rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
 
         {/* Name */}
         <div className="flex flex-col">
-          <label htmlFor="postedByName" className="text-gray-700 font-medium mb-2">
+          <label htmlFor="postedByName" className=" font-medium mb-2">
             Name
           </label>
           <input
@@ -133,14 +112,14 @@ const AddListing = () => {
             placeholder="Enter name"
             value={formData.postedByName}
             onChange={handleChange}
-            className="block w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="block w-full text-black  px-3 py-2 border rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             required
           />
         </div>
 
         {/* Location */}
         <div className="flex flex-col">
-          <label htmlFor="location" className="text-gray-700 font-medium mb-2">
+          <label htmlFor="location" className=" font-medium mb-2">
             Location
           </label>
           <input
@@ -150,14 +129,14 @@ const AddListing = () => {
             placeholder="Enter location"
             value={formData.location}
             onChange={handleChange}
-            className="block w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="block text-black w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             required
           />
         </div>
 
         {/* City */}
         <div className="flex flex-col">
-          <label htmlFor="cityName" className="text-gray-700 font-medium mb-2">
+          <label htmlFor="cityName" className=" font-medium mb-2">
             City
           </label>
           <input
@@ -167,14 +146,14 @@ const AddListing = () => {
             placeholder="Enter city"
             value={formData.cityName}
             onChange={handleChange}
-            className="block w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="block text-black w-full px-3 py-2 border rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             required
           />
         </div>
 
         {/* Nearest Place */}
         <div className="flex flex-col">
-          <label htmlFor="nearestPlace" className="text-gray-700 font-medium mb-2">
+          <label htmlFor="nearestPlace" className=" font-medium mb-2">
             Nearest Place
           </label>
           <input
@@ -184,14 +163,14 @@ const AddListing = () => {
             placeholder="Nearest place (e.g., metro station)"
             value={formData.nearestPlace}
             onChange={handleChange}
-            className="block w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="block text-black w-full px-3 py-2 border rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             required
           />
         </div>
 
         {/* Rent */}
         <div className="flex flex-col">
-          <label htmlFor="rent" className="text-gray-700 font-medium mb-2">
+          <label htmlFor="rent" className=" font-medium mb-2">
             Rent (INR)
           </label>
           <input
@@ -201,14 +180,14 @@ const AddListing = () => {
             placeholder="Enter rent amount"
             value={formData.rent}
             onChange={handleChange}
-            className="block w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="block text-black w-full px-3 py-2 border rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             required
           />
         </div>
 
         {/* Contact Number */}
         <div className="flex flex-col">
-          <label htmlFor="contactNumber" className="text-gray-700 font-medium mb-2">
+          <label htmlFor="contactNumber" className=" font-medium mb-2">
             Contact Number
           </label>
           <input
@@ -218,14 +197,14 @@ const AddListing = () => {
             placeholder="Enter contact number"
             value={formData.contactNumber}
             onChange={handleChange}
-            className="block w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="block text-black w-full px-3 py-2 border rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             required
           />
         </div>
 
         {/* Looking For (Gender) */}
         <div className="flex flex-col">
-          <label htmlFor="lookingForGender" className="text-gray-700 font-medium mb-2">
+          <label htmlFor="lookingForGender" className=" font-medium mb-2">
             Looking For (Gender)
           </label>
           <select
@@ -233,7 +212,7 @@ const AddListing = () => {
             id="lookingForGender"
             value={formData.lookingForGender}
             onChange={handleChange}
-            className="block w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="block text-black w-full px-3 py-2 border rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             required
           >
             <option value="" disabled>
@@ -247,7 +226,7 @@ const AddListing = () => {
 
         {/* Looking For (Flatmates) */}
         <div className="flex flex-col">
-          <label htmlFor="lookingForAccoType" className="text-gray-700 font-medium mb-2">
+          <label htmlFor="lookingForAccoType" className=" font-medium mb-2">
             Looking For  (Listing Type)
           </label>
           <select
@@ -255,7 +234,7 @@ const AddListing = () => {
             id="lookingForAccoType"
             value={formData.lookingForAccoType}
             onChange={handleChange}
-            className="block w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="block text-black w-full px-3 py-2 border rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             required
           >
             <option value="" disabled>
@@ -265,24 +244,10 @@ const AddListing = () => {
             <option value="roommate">roommate</option>
           </select>
         </div>
-        {/* <div className="flex flex-col">
-          <label htmlFor="lookingFor" className="text-gray-700 font-medium mb-2">
-            Looking For
-          </label>
-          <input
-            type="text"
-            name="lookingFor"
-            id="lookingFor"
-            placeholder="Flatmates or others"
-            value={formData.lookingFor}
-            onChange={handleChange}
-            className="block w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div> */}
 
         {/* Facilities */}
         <div className="flex flex-col">
-          <label htmlFor="facilities" className="text-gray-700 font-medium mb-2">
+          <label htmlFor="facilities" className=" font-medium mb-2">
             Facilities
           </label>
           <input
@@ -292,7 +257,7 @@ const AddListing = () => {
             placeholder="Facilities (e.g., gym, wifi, etc.)"
             value={formData.facilities}
             onChange={handleChange}
-            className="block w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="block text-black w-full px-3 py-2 border rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
 

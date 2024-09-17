@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AUTH_API_ENDPOINT } from '../../utils/constant';
+import { AUTH_API_ENDPOINT } from '../utils/constant';
 import { login } from '../redux-store/authSlice';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
+import toast from 'react-hot-toast';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,15 +20,13 @@ const Login = () => {
         headers: { 'Content-Type': "application/json" },
         withCredentials: true
       })
-      console.log(res.data);
       if (res.data) {
         dispatch(login(res?.data));
         navigate("/");
       }
-
-      console.log('Login Data:', email, password);
     } catch (error) {
-      console.log(error);
+      toast.error(error?.response?.data?.error)
+      // console.log(error);
     }
   };
 

@@ -3,8 +3,14 @@ import { useSelector } from 'react-redux'
 import ListingCard from './ListingCard';
 
 const Listings = ({listings}) => {
-  // const listings = useSelector(store => store.listing.listings);
-  // console.log(listings);
+
+  if(listings?.length == 0){
+    return (
+      <div className='text-center mt-16'>
+        <h3>No data available.</h3>
+      </div>
+    )
+  }
   
   return (
     <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 ">

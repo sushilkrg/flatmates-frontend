@@ -1,20 +1,17 @@
 import axios from 'axios';
 import React from 'react'
 import { useNavigate } from "react-router-dom"
-import { LISTING_API_ENDPOINT } from '../../utils/constant';
+import { LISTING_API_ENDPOINT } from '../utils/constant';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteListing } from '../redux-store/listingSlice';
+import toast from 'react-hot-toast';
 
 const ListingCard = ({ listing }) => {
-    // console.log(listing);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector(store => store.user.user);
-    // console.log(user);
 
     const handleDetails = (id) => {
-        console.log(id);
-
         navigate(`/details/${id}`);
     }
 
@@ -24,9 +21,8 @@ const ListingCard = ({ listing }) => {
                 {
                     withCredentials: true
                 });
-            console.log(res);
+            toast.success(res?.data?.message);
             console.log("save for later added");
-
         } catch (error) {
             console.log(error);
         }
@@ -38,17 +34,15 @@ const ListingCard = ({ listing }) => {
                 {
                     withCredentials: true
                 });
-            console.log(res);
-            console.log("listing deleted successfully");
-            dispatch(deleteListing(res?.data))
-
+            toast.success(res?.data?.message);
+            dispatch(deleteListing(res?.data?.listing))
         } catch (error) {
             console.log(error);
         }
     }
 
     return (
-        <div className="border border-gray-300 p-4 flex flex-row shadow rounded-lg shadow-lg shadow-cyan-500/30">
+        <div className="border border-gray-300 p-4 flex flex-row  rounded-lg shadow-lg shadow-cyan-500/30">
             <div className="bg-gray-200  md:h-56 flex-1 items-center justify-center text-gray-500  rounded-lg">
                 <img className="object-cover w-full h-full " src={listing?.image} alt="No image" />
             </div>
@@ -66,7 +60,6 @@ const ListingCard = ({ listing }) => {
                     </button>}
                     {user?._id == listing?.postedBy && <button onClick={() => handleDeleteListing(listing?._id)} className="mt-4 flex items-center justify-center bg-gray-800 hover:bg-gray-600 text-white px-4 py-1 rounded-lg">
                         delete
-                        {/* <img className="w-8 border rounded-md" src="https://png.pngtree.com/png-vector/20201226/ourmid/pngtree-line-icon-save-png-image_2644818.jpg" alt="" /> */}
                     </button>}
                     <button onClick={() => handleDetails(listing?._id)} className="mt-4 bg-gray-800 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
                         Details

@@ -15,6 +15,8 @@ import MyListings from './pages/MyListings';
 import Footer from './components/Footer';
 import { store } from './redux-store/store';
 import { login } from './redux-store/authSlice';
+import { Toaster } from 'react-hot-toast';
+
 
 function App() {
 
@@ -22,7 +24,8 @@ function App() {
   const storedUser = localStorage.getItem('user');
 
   if (storedUser) {
-    store.dispatch(login(JSON.parse(storedUser))); // Update state with retrieved data
+    // Update state with retrieved data
+    store.dispatch(login(JSON.parse(storedUser)));
   }
 
   return (
@@ -44,30 +47,9 @@ function App() {
           <Footer />
         </div>
       </Router>
+      <Toaster />
     </>
   )
 }
 
 export default App
-
-{/* <Router>
-  <div className="min-h-screen bg-gray-900 text-white">
-    {user && <TopNavigationBar />}
-    <div className="flex flex-col lg:flex-row items-center justify-center">
-      {user && <Sidebar />}
-      <Routes>
-        <Route path="/" element={user ? <MainContent /> : <Navigate to="/login" />} />
-        <Route path="/profile/:username" element={user ? <Profile /> : <Navigate to="/login" />} />
-       
-        <Route path="/notifications" element={user ? <Notifications /> : <Navigate to="/login" />} />
-        <Route path="/bookmarks" element={user ? <Bookmarks /> : <Navigate to="/login" />} />
-        <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
-        <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/" />} />
-        <Route path="/logout" element={<Navigate to="/login" />} />
-      </Routes>
-      {user && <Trends />}
-    </div>
-  </div>
-  <Footer />
-</Router>
-<Toaster /> */}

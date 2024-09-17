@@ -9,11 +9,3 @@ export const store = configureStore({
   },
 });
 
-// // Fetch user data from localStorage on app load
-// const storedUser = localStorage.getItem("user");
-
-// if (storedUser) {
-//   console.log(storedUser);
-//   // Update state with retrieved data
-//   store.dispatch(authSlice.actions.login(JSON.parse(storedUser)));
-// }

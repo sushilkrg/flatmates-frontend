@@ -2,9 +2,10 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
-import { AUTH_API_ENDPOINT } from '../../utils/constant';
+import { AUTH_API_ENDPOINT } from '../utils/constant';
 import { logout } from '../redux-store/authSlice';
 import { setAllListings, setSavedForLaterListings, setMyListings, setListingDetail } from '../redux-store/listingSlice';
+import toast from 'react-hot-toast';
 
 const TopNav = () => {
 
@@ -23,22 +24,17 @@ const TopNav = () => {
                 withCredentials: true
             })
 
-            console.log(res.data);
             dispatch(logout());
             dispatch(setAllListings(null));
             dispatch(setMyListings(null));
             dispatch(setSavedForLaterListings(null));
             dispatch(setListingDetail(null));
-
+            toast.success(res?.data?.message)
             navigate("/login");
-
-
         } catch (error) {
             console.log(error);
-
         }
     }
-
 
     return (
         <nav className="bg-gray-800 text-white p-4 shadow-lg sticky">
@@ -73,17 +69,16 @@ const TopNav = () => {
                     </button>
                 </div>
             </div>
-            {/* {isOpen && (
+            {isOpen && (
                 <div className="md:hidden  bg-gray-800">
-                    <Link to="/" onClick={() => setIsOpen(false)} className="block py-2 px-4 hover:text-blue-400">Home</Link>
-                    <Link to={`/profile/${user?.username}`} onClick={() => setIsOpen(false)} className="block py-2 px-4 hover:text-blue-400">Profile</Link>
-                    <Link to="/notifications" onClick={() => setIsOpen(false)} className="block py-2 px-4 hover:text-blue-400">Notifications</Link>
-                    <Link to="/bookmarks" onClick={() => setIsOpen(false)} className="block py-2 px-4 hover:text-blue-400">Bookamrks</Link>
-                    <Link to="/logout" onClick={handleLogout} className="block py-2 px-4 hover:text-blue-400">Logout</Link>
-                    {!user && <Link to="/signup" onClick={() => setIsOpen(false)} className="block py-2 px-4 hover:text-blue-400">Signup</Link>}
+                    {user && <Link to="/add" onClick={() => setIsOpen(false)} className="block py-2 px-4 hover:text-blue-400">Add Listing</Link>}
+                    {user && <Link to="/my-listings" onClick={() => setIsOpen(false)} className="block py-2 px-4 hover:text-blue-400">My Listings</Link>}
+                    {user && <Link to="/saved-for-later" onClick={() => setIsOpen(false)} className="block py-2 px-4 hover:text-blue-400">Saved for later</Link>}
+                    {user && <Link to="/logout" onClick={handleLogout} className="block py-2 px-4  hover:text-blue-400">Logout</Link>}
                     {!user && <Link to="/login" onClick={() => setIsOpen(false)} className="block py-2 px-4 hover:text-blue-400">Login</Link>}
+                    {!user && <Link to="/signup" onClick={() => setIsOpen(false)} className="block py-2 px-4 hover:text-blue-400">Signup</Link>}
                 </div>
-            )} */}
+            )}
         </nav>
     )
 }

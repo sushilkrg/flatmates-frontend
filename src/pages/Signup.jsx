@@ -3,28 +3,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { login } from "../redux-store/authSlice"
-import { AUTH_API_ENDPOINT } from '../../utils/constant';
+import { AUTH_API_ENDPOINT } from '../utils/constant';
+import toast from 'react-hot-toast';
 
 const Signup = () => {
   const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  // const [formData, setFormData] = useState({
-  //   fullName: '',
-  //   email: '',
-  //   password: '',
-  // })
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  // const handleChange = (e) => {
-  //   setFormData({
-  //     ...formData,
-  //     [e.target.name]: e.target.value
-  //   });
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,18 +21,15 @@ const Signup = () => {
         headers: { 'Content-Type': "application/json" },
         withCredentials: true
       })
-      console.log(res.data);
-      if (res.data) {
+      if (res?.data) {
         dispatch(login(res?.data));
         navigate("/");
       }
-
-      console.log('Form Data Submitted:', fullName, email, password);
     } catch (error) {
+      toast.error(error?.response?.data?.error);
       console.log(error);
     }
   };
-
 
   return (
     <div className="min-h-screen bg-gray-800 flex flex-col justify-center py-12 sm:px-6 lg:px-8">

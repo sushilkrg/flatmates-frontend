@@ -3,7 +3,7 @@ import React from 'react'
 import { useNavigate } from "react-router-dom"
 import { LISTING_API_ENDPOINT } from '../utils/constant';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteListing } from '../redux-store/listingSlice';
+import { deleteListing, setSavedForLaterListings } from '../redux-store/listingSlice';
 import toast from 'react-hot-toast';
 
 const ListingCard = ({ listing }) => {
@@ -16,13 +16,17 @@ const ListingCard = ({ listing }) => {
     }
 
     const handleSaveForLater = async (id) => {
+        if (!user) {
+            toast.error("Login to save for later");
+            return;
+        }
         try {
             const res = await axios.post(`${LISTING_API_ENDPOINT}/saveforlater/${id}`, { id: user?._id },
                 {
                     withCredentials: true
                 });
             toast.success(res?.data?.message);
-            console.log("save for later added");
+            dispatch(setSavedForLaterListings(res?.data?.listing));
         } catch (error) {
             console.log(error);
         }

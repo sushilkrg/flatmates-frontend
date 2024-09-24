@@ -38,7 +38,24 @@ const listingSlice = createSlice({
       state.myListings = action.payload;
     },
     setSavedForLaterListings: (state, action) => {
-        state.savedForLaterListings = action.payload;
+      // state.savedForLaterListings = action.payload;
+      if (
+        state.savedForLaterListings.some(
+          (listing) => listing?._id === action.payload._id
+        )
+      ) {
+        // If the listing is already saved, remove it from the array
+        state.savedForLaterListings = state.savedForLaterListings.filter(
+          (listing) => listing?._id !== action.payload._id
+        );
+      } else {
+        // If the listing is not in the array, add it to the saved list
+        state.savedForLaterListings = [
+          ...state.savedForLaterListings,
+          action.payload,
+        ];
+        // state.savedForLaterListings = action.payload;
+      }
     },
   },
 });

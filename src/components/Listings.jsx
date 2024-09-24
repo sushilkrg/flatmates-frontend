@@ -1,5 +1,4 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import ListingCard from './ListingCard';
 
 const Listings = ({listings}) => {
@@ -14,7 +13,7 @@ const Listings = ({listings}) => {
   
   return (
     <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 ">
-      {listings?.map((listing) => <ListingCard key={listing?._id} listing={listing} />)}
+      {listings?.map((listing) => <ListingCard listing={listing} />)}
     </div>
   )
 }

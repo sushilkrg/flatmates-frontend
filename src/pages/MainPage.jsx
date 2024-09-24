@@ -1,44 +1,67 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useGetListings from "../hooks/useGetListings";
 import Listings from "../components/Listings";
 import { LISTING_API_ENDPOINT } from "../utils/constant";
 import axios from "axios";
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setLocation } from "../redux-store/locationSlice";
+import { setAllListings } from "../redux-store/listingSlice";
 
 const MainPage = () => {
 
   const { listings } = useSelector(store => store.listing);
-  const [cityname, setCityname] = useState("");
-  const [allListings, setAllListings] = useState(listings);
-
-  // const [filteredListings, setFilteredListings] = useState("");
+  const { location } = useSelector(store => store.location);
+  const [cityname, setCityname] = useState(location);
+  const [allListing, setAllListing] = useState(listings);
   const [selectLookingFor, setSelectLookingFor] = useState("all");
+  const dispatch = useDispatch();
 
   useGetListings();
-  // const dispatch = useDispatch();
 
-  const getFilteredListings = async () => {
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    dispatch(setLocation(cityname));
     try {
-      const res = await axios.get(`${LISTING_API_ENDPOINT}/filter`, { cityname: cityname, lookingFor: selectLookingFor });
+      const res = await axios.get(`${LISTING_API_ENDPOINT}/search/${cityname}`);
+      dispatch(setAllListings(res?.data?.filteredListings));
+      setAllListing(res?.data?.filteredListings);
     } catch (error) {
       console.log(error);
     }
   }
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.get(`${LISTING_API_ENDPOINT}/filter`, { params: { cityname: cityname, lookingFor: selectLookingFor } });
-      setAllListings(res?.data);
-    } catch (error) {
-      console.log(error);
+  const handleChange = (e) => {
+    setSelectLookingFor(e.target.value);
+    let lookingFor = e.target.value;
+    let filteredListings;
+
+    if (lookingFor === "all") {
+      setAllListing(listings);
+    }
+
+    if (lookingFor == "male") {
+      filteredListings = listings.filter(
+        (listing) => listing?.lookingForGender !== "female"
+      );
+      setAllListing(filteredListings);
+    }
+
+    if (lookingFor == "female") {
+      filteredListings = listings.filter(
+        (listing) => listing.lookingForGender !== "male"
+      );
+      setAllListing(filteredListings)
     }
   }
 
   const handleAllListings = () => {
-    setAllListings(listings);
-    setCityname("");
+    setAllListing(listings);
+    // setCityname("");
   }
+
+  useEffect(() => {
+    setAllListing(listings);
+  }, [listings])
 
   return (
     <div className="w-full min-h-screen p-4 md:p-6">
@@ -70,7 +93,7 @@ const MainPage = () => {
               name="lookingForGender"
               id="lookingForGender"
               value={selectLookingFor}
-              onChange={(e) => setSelectLookingFor(e.target.value)}
+              onChange={handleChange}
               className="block w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="all">All</option>
@@ -81,8 +104,9 @@ const MainPage = () => {
         </div>
       </div>
 
-      {!allListings && <Listings listings={listings} />}
-      {allListings && <Listings listings={allListings} />}
+      {/* {!allListings && <Listings listings={listings} />}
+      {allListings && <Listings listings={allListings} />} */}
+      <Listings listings={allListing} />
     </div>
   );
 };

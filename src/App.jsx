@@ -16,6 +16,7 @@ import Footer from './components/Footer';
 import { store } from './redux-store/store';
 import { login } from './redux-store/authSlice';
 import { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
     store.dispatch(login(JSON.parse(storedUser)));
   }
 
+  const isLoggedIn = useSelector((store) => store.user.isLoggedIn)
+  const { location } = useSelector((store) => store.location);
+
   return (
     <>
       <Router>
@@ -35,7 +39,8 @@ function App() {
           <TopNav />
           <Routes>
             <Route path="/homepage" element={<Home />} />
-            <Route path="/" element={<MainPage />} />
+            <Route path="/" element={(!isLoggedIn && !location) ? <Home /> : <MainPage />} />
+            <Route path="/listings" element={<MainPage />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Navigate to="/login" />} />

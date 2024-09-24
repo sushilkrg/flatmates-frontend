@@ -16,6 +16,10 @@ const ListingDetails = () => {
   const listingDetail = useSelector(store => store.listing.listingDetail);
 
   const handleSaveForLater = async (id) => {
+    if(!user){
+      toast.error("Login to save for later");
+      return;
+  }
     try {
       const res = await axios.post(
         `${LISTING_API_ENDPOINT}/saveforlater/${id}`,

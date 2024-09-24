@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { LISTING_API_ENDPOINT } from "../utils/constant";
 import { setListingDetail } from "../redux-store/listingSlice";

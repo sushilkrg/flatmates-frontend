@@ -13,7 +13,7 @@ const useGetListings = () => {
       const res = await axios.get(`${LISTING_API_ENDPOINT}/search/${location}`);
       dispatch(setAllListings(res?.data?.filteredListings));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -22,7 +22,7 @@ const useGetListings = () => {
       const res = await axios.get(`${LISTING_API_ENDPOINT}`);
       dispatch(setAllListings(res?.data));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

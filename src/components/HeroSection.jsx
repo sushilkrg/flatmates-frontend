@@ -2,7 +2,7 @@ import React from "react";
 
 const HeroSection = () => {
   return (
-    <div className="bg-gradient-to-r from-[#020024] via-[#090979] to-[#00d4ff] h-[650px] text-white text-center py-16 px-4 flex items-center flex-col justify-center gap-4">
+    <div className="bg-gradient-to-r from-[#020024] via-[#090979] to-[#00d4ff] h-[93vh] text-white text-center py-16 px-4 flex items-center flex-col justify-center gap-4">
       <h1 className="text-3xl font-bold md:text-5xl">
         Find Your Perfect Flatmate or Roommate
       </h1>

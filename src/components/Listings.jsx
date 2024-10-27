@@ -13,7 +13,7 @@ const Listings = ({listings}) => {
   
   return (
     <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 ">
-      {listings?.map((listing) => <ListingCard listing={listing} />)}
+      {listings?.map((listing, index) => <ListingCard key={index} listing={listing} />)}
     </div>
   )
 }

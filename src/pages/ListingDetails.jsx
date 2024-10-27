@@ -16,10 +16,10 @@ const ListingDetails = () => {
   const listingDetail = useSelector(store => store.listing.listingDetail);
 
   const handleSaveForLater = async (id) => {
-    if(!user){
+    if (!user) {
       toast.error("Login to save for later");
       return;
-  }
+    }
     try {
       const res = await axios.post(
         `${LISTING_API_ENDPOINT}/saveforlater/${id}`,
@@ -30,7 +30,7 @@ const ListingDetails = () => {
       );
       toast.success(res?.data?.message);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -43,7 +43,7 @@ const ListingDetails = () => {
       toast.success(res?.data?.message);
       dispatch(deleteListing(res?.data?.listing))
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -58,24 +58,48 @@ const ListingDetails = () => {
 
       {/* Details Section */}
       <div className="w-full md:w-1/2 p-4 space-y-4">
-        <p className="font-bold">Name - {listingDetail?.postedByName}</p>
-        <p>Location - {listingDetail?.location}</p>
-        <p>City Name - {listingDetail?.cityName}</p>
-        <p>Nearest Place - {listingDetail?.nearestPlace}</p>
-        <p>Rent - ₹ {listingDetail?.rent}</p>
-        <p>Looking for - {listingDetail?.lookingForGender}</p>
-        <p>Looking for - {listingDetail?.lookingForAccoType}</p>
-        <p>Contact No - {listingDetail?.contactNumber}</p>
-        
         <p>
-          Facilities - {listingDetail?.facilities?.map((facility) => <span key={facility}> {facility} </span>)}
+          <span className="text-gray-300">Posted by: </span>
+          <span className="text-white font-semibold"> {listingDetail?.postedByName}</span>
+        </p>
+        <p>
+          <span className="text-gray-300">Location: </span>
+          <span className="text-white font-semibold"> {listingDetail?.location}</span>
+        </p>
+        <p>
+          <span className="text-gray-300">City Name: </span>
+          <span className="text-white font-semibold"> {listingDetail?.cityName}</span>
+        </p>
+        <p>
+          <span className="text-gray-300">Nearest Place: </span>
+          <span className="text-white font-semibold"> {listingDetail?.nearestPlace}</span>
+        </p>
+        <p>
+          <span className="text-gray-300">Rent: </span>
+          <span className="text-white font-semibold"> ₹ {listingDetail?.rent}</span>
+        </p>
+        <p>
+          <span className="text-gray-300">Looking for: </span>
+          <span className="text-white font-semibold"> {listingDetail?.lookingForGender}</span>
+        </p>
+        <p>
+          <span className="text-gray-300">Looking for: </span>
+          <span className="text-white font-semibold"> {listingDetail?.lookingForAccoType}</span>
+        </p>
+        <p>
+          <span className="text-gray-300">Contact No: </span>
+          <span className="text-white font-semibold"> {listingDetail?.contactNumber}</span>
+        </p>
+        <p>
+          <span className="text-gray-300">Facilities: </span>
+          <span className="text-white font-semibold"> {listingDetail?.facilities?.map((facility) => <span key={facility}> {facility} </span>)}</span>
         </p>
 
         {/* Save for Later Button */}
-        {user?._id != listingDetail?.postedBy && <button onClick={() => handleSaveForLater(listingDetail?._id)} className="mt-6 bg-gray-800 text-white px-6 py-2 rounded-lg">
+        {user?._id != listingDetail?.postedBy && <button onClick={() => handleSaveForLater(listingDetail?._id)} className="mt-6 bg-white hover:bg-slate-300 text-black px-6 py-2 rounded-lg">
           Save for later
         </button>}
-        {user?._id == listingDetail?.postedBy && <button onClick={() => handleDeleteListing(listingDetail?._id)} className="mt-6 bg-gray-800 text-white px-6 py-2 rounded-lg">
+        {user?._id == listingDetail?.postedBy && <button onClick={() => handleDeleteListing(listingDetail?._id)} className="mt-6 bg-red-600 hover:bg-red-800 text-white px-6 py-2 rounded-lg">
           delete
         </button>}
       </div>

@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setLocation } from "../redux-store/locationSlice";
 
 const cities = [
   { name: "Delhi", imgSrc: "https://media.istockphoto.com/id/510795912/photo/india-gate.jpg?s=612x612&w=0&k=20&c=kZkdrEDXEtoLK6Qh8XPywc9VYV95mJXXcWLBxHftN_U=" },
@@ -16,15 +18,25 @@ const cities = [
 ];
 
 const PopularCities = () => {
+
+  const [cityName, setCityName] = useState("");
+  const dispatch = useDispatch();
+
+  const handleClick = (e) => {
+    setCityName(e.target.innerText.toLowerCase());
+    dispatch(setLocation(e.target.innerText.toLowerCase()));
+  }
+
   return (
-    <section className="py-12 px-4 md:mx-20">
+    <section className="container mx-auto px-4 md:px-8 py-20">
       <h2 className="text-center text-2xl md:text-4xl font-bold text-white mb-8">
         View rooms in Popular Cities
       </h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4  gap-8">
         {cities.map((city, index) => (
-          <div
+          <button
             key={index}
+            onClick={handleClick}
             className="relative rounded-lg overflow-hidden shadow-md cursor-pointer hover:scale-105 transition-transform"
           >
             <img
@@ -37,7 +49,7 @@ const PopularCities = () => {
                 {city.name.toUpperCase()}
               </span>
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </section>

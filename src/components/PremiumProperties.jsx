@@ -2,8 +2,9 @@ import React from "react";
 
 const PremiumProperties = () => {
   return (
-    <section className="flex flex-col md:flex-row justify-between items-center pt-16 pb-40 px-8 md:px-12 bg-white">
-      <div className="md:w-1/2 md:ml-40 text-center md:text-left">
+    <section className=" bg-white">
+    <div className="container mx-auto flex flex-col md:flex-row justify-between items-center pt-16 pb-40 px-8 md:px-20 bg-white">
+      <div className="md:w-1/2  text-center md:text-left">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
           Are you looking for <br /> Premium Properties?
         </h2>
@@ -31,6 +32,7 @@ const PremiumProperties = () => {
           />
         </div>
       </div>
+    </div>
     </section>
   );
 };

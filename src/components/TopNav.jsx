@@ -32,13 +32,13 @@ const TopNav = () => {
             toast.success(res?.data?.message)
             navigate("/login");
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 
     return (
         <nav className="bg-gray-800 text-white p-4 shadow-lg sticky">
-            <div className="container px-16 flex justify-between items-center">
+            <div className="container mx-auto px-16 flex justify-between items-center">
                 <div className="text-xl font-bold">
                     <Link to="/" className="hover:text-blue-400">Flatmates</Link>
                 </div>

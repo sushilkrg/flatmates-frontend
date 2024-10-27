@@ -74,7 +74,7 @@ const AddListing = () => {
       toast.success(res?.data?.message);
       navigate("/");
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -100,7 +100,6 @@ const AddListing = () => {
           />
         </div>
 
-        {/* Name */}
         <div className="flex flex-col">
           <label htmlFor="postedByName" className=" font-medium mb-2">
             Name
@@ -117,7 +116,6 @@ const AddListing = () => {
           />
         </div>
 
-        {/* Location */}
         <div className="flex flex-col">
           <label htmlFor="location" className=" font-medium mb-2">
             Location
@@ -134,7 +132,6 @@ const AddListing = () => {
           />
         </div>
 
-        {/* City */}
         <div className="flex flex-col">
           <label htmlFor="cityName" className=" font-medium mb-2">
             City
@@ -151,7 +148,6 @@ const AddListing = () => {
           />
         </div>
 
-        {/* Nearest Place */}
         <div className="flex flex-col">
           <label htmlFor="nearestPlace" className=" font-medium mb-2">
             Nearest Place
@@ -168,7 +164,6 @@ const AddListing = () => {
           />
         </div>
 
-        {/* Rent */}
         <div className="flex flex-col">
           <label htmlFor="rent" className=" font-medium mb-2">
             Rent (INR)
@@ -185,7 +180,6 @@ const AddListing = () => {
           />
         </div>
 
-        {/* Contact Number */}
         <div className="flex flex-col">
           <label htmlFor="contactNumber" className=" font-medium mb-2">
             Contact Number
@@ -202,7 +196,6 @@ const AddListing = () => {
           />
         </div>
 
-        {/* Looking For (Gender) */}
         <div className="flex flex-col">
           <label htmlFor="lookingForGender" className=" font-medium mb-2">
             Looking For (Gender)
@@ -224,7 +217,6 @@ const AddListing = () => {
           </select>
         </div>
 
-        {/* Looking For (Flatmates) */}
         <div className="flex flex-col">
           <label htmlFor="lookingForAccoType" className=" font-medium mb-2">
             Looking For  (Listing Type)
@@ -245,7 +237,6 @@ const AddListing = () => {
           </select>
         </div>
 
-        {/* Facilities */}
         <div className="flex flex-col">
           <label htmlFor="facilities" className=" font-medium mb-2">
             Facilities
@@ -261,7 +252,6 @@ const AddListing = () => {
           />
         </div>
 
-        {/* Save Button */}
         <div className="text-right">
           <button
             type="submit"

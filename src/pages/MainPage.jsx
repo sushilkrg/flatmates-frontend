@@ -11,8 +11,8 @@ const MainPage = () => {
 
   const { listings } = useSelector(store => store.listing);
   const { location } = useSelector(store => store.location);
-  const [cityname, setCityname] = useState(location);
-  const [allListing, setAllListing] = useState(listings);
+  const [cityname, setCityname] = useState(location || "");
+  const [allListing, setAllListing] = useState(listings || "");
   const [selectLookingFor, setSelectLookingFor] = useState("all");
   const dispatch = useDispatch();
 
@@ -26,7 +26,7 @@ const MainPage = () => {
       dispatch(setAllListings(res?.data?.filteredListings));
       setAllListing(res?.data?.filteredListings);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -64,7 +64,7 @@ const MainPage = () => {
   }, [listings])
 
   return (
-    <div className="w-full min-h-screen p-4 md:p-6">
+    <div className="container mx-auto w-full min-h-screen p-4 md:p-6">
       {/* Search and Filter */}
       <div className="flex flex-row justify-around  mb-6">
         <div className="grid grid-col-1 md:grid-cols-3 gap-2 mx-3">

@@ -19,7 +19,8 @@ const Testimonials = () => {
   ];
 
   return (
-    <section className="py-16 h-auto px-4 bg-white">
+    <section className=" py-16 h-auto px-4 bg-white">
+      <div className="container mx-auto">
       <h2 className="text-2xl text-black font-semibold text-center mb-12">What People Are Saying</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {testimonials.map((testimonial, index) => (
@@ -33,6 +34,7 @@ const Testimonials = () => {
             </h3>
           </div>
         ))}
+      </div>
       </div>
     </section>
   );

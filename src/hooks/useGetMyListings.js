@@ -1,7 +1,7 @@
 import axios from "axios";
 import  { useEffect } from "react";
 import { LISTING_API_ENDPOINT } from "../utils/constant";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setMyListings } from "../redux-store/listingSlice";
 
 const useGetMyListings = () => {
@@ -14,7 +14,7 @@ const useGetMyListings = () => {
       });
       dispatch(setMyListings(res?.data));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

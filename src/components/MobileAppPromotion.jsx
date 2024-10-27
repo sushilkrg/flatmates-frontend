@@ -2,7 +2,8 @@ import React from "react";
 
 const MobileAppPromotion = () => {
   return (
-    <section className="flex flex-col md:px-40 md:flex-row justify-between items-center py-12 px-4 bg-white">
+    <section className="bg-white">
+    <div className="container mx-auto flex flex-col md:px-20 md:flex-row justify-between items-center py-12 px-4 bg-white">
       <div className="md:w-1/2 text-center md:text-left">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
           Connect with us from anywhere
@@ -38,6 +39,7 @@ const MobileAppPromotion = () => {
           />
         </div>
       </div>
+    </div>
     </section>
   );
 };

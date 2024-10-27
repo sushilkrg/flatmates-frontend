@@ -28,7 +28,7 @@ const ListingCard = ({ listing }) => {
             toast.success(res?.data?.message);
             dispatch(setSavedForLaterListings(res?.data?.listing));
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 
@@ -41,7 +41,7 @@ const ListingCard = ({ listing }) => {
             toast.success(res?.data?.message);
             dispatch(deleteListing(res?.data?.listing))
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 
@@ -51,21 +51,39 @@ const ListingCard = ({ listing }) => {
                 <img className="object-cover w-full h-full " src={listing?.image} alt="No image" />
             </div>
             <div className="mt-0 flex-1 pl-4">
-                <p className="font-bold">{listing?.postedByName}</p>
-                <p>📍{listing?.location}</p>
-                <p>City - {listing?.cityName}</p>
-                <p>Rent: ₹ {listing?.rent}</p>
-                <p>Looking for: {listing?.lookingForGender}</p>
-                <p>Looking for: {listing?.lookingForAccoType}</p>
-                <div className="flex justify-between flex-col md:flex-row">
-                    {user?._id != listing?.postedBy && <button onClick={() => handleSaveForLater(listing?._id)} className="mt-4 flex items-center justify-center bg-gray-800 hover:bg-gray-600 text-white px-4 py-1 rounded-lg">
+                <p>
+                    <span className="text-gray-300">Posted by: </span>
+                    <span className="text-white font-semibold"> {listing?.postedByName}</span>
+                </p>
+                <p>
+                    <span className="text-gray-300">Location: </span>
+                    <span className="text-white font-semibold"> {listing?.location}</span>
+                </p>
+                <p>
+                    <span className="text-gray-300">City: </span>
+                    <span className="text-white font-semibold"> {listing?.cityName}</span>
+                </p>
+                <p>
+                    <span className="text-gray-300">Rent: </span>
+                    <span className="text-white font-semibold"> ₹ {listing?.rent}</span>
+                </p>
+                <p>
+                    <span className="text-gray-300">Looking for:  </span>
+                    <span className="text-white font-semibold"> {listing?.lookingForGender}</span>
+                </p>
+                <p>
+                    <span className="text-gray-300">Looking for: </span>
+                    <span className="text-white font-semibold"> {listing?.lookingForAccoType}</span>
+                </p>
+                <div className="flex justify-between flex-row md:flex-row">
+                    {user?._id != listing?.postedBy && <button onClick={() => handleSaveForLater(listing?._id)} className="mt-4 flex items-center justify-center bg-white hover:bg-slate-300  px-4 py-1 rounded-lg">
                         {/* save for later */}
-                        <img className="w-8 border rounded-md" src="https://png.pngtree.com/png-vector/20201226/ourmid/pngtree-line-icon-save-png-image_2644818.jpg" alt="" />
+                        <img className="w-8 h-8 border rounded-md" src="https://w7.pngwing.com/pngs/430/166/png-transparent-bookmark-computer-icons-bookmark-angle-rectangle-black-thumbnail.png" alt="save for later" />
                     </button>}
-                    {user?._id == listing?.postedBy && <button onClick={() => handleDeleteListing(listing?._id)} className="mt-4 flex items-center justify-center bg-gray-800 hover:bg-gray-600 text-white px-4 py-1 rounded-lg">
+                    {user?._id == listing?.postedBy && <button onClick={() => handleDeleteListing(listing?._id)} className="mt-4 flex items-center justify-center bg-red-700 hover:bg-red-900 text-white px-4 py-1 rounded-lg">
                         delete
                     </button>}
-                    <button onClick={() => handleDetails(listing?._id)} className="mt-4 bg-gray-800 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
+                    <button onClick={() => handleDetails(listing?._id)} className="mt-4 bg-white hover:bg-slate-300 text-black px-4 py-2 rounded-lg">
                         Details
                     </button>
                 </div>

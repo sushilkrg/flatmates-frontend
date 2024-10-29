@@ -48,7 +48,7 @@ const ListingDetails = () => {
   }
 
   return (
-    <div className="w-full min-h-[90vh] p-4 md:p-6 flex flex-col md:flex-row  ">
+    <div className="container mx-auto w-full min-h-[90vh] p-4 md:p-6 flex flex-col md:flex-row  ">
       {/* Image Section */}
       <div className="w-full md:w-1/2 p-4">
         <div className="bg-gray-200 h-64 flex items-center justify-center text-gray-500 rounded-lg">

@@ -12,7 +12,7 @@ const useGetSavedForLaterListings = () => {
       const res = await axios.get(`${LISTING_API_ENDPOINT}/saveforlater`, {
         withCredentials: true,
       });
-      
+
       dispatch(setSavedForLaterListings(res?.data));
     } catch (error) {
       console.error(error);

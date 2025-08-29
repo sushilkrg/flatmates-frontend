@@ -1,12 +1,12 @@
 import axios from 'axios';
-import React from 'react'
 import { useNavigate } from "react-router-dom"
 import { LISTING_API_ENDPOINT } from '../utils/constant';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteListing, setSavedForLaterListings } from '../redux-store/listingSlice';
 import toast from 'react-hot-toast';
 
-const ListingCard = ({ listing }) => {
+const ListingCard = (listings) => {
+    let { listing } = listings;
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector(store => store.user.user);
@@ -26,7 +26,11 @@ const ListingCard = ({ listing }) => {
                     withCredentials: true
                 });
             toast.success(res?.data?.message);
-            dispatch(setSavedForLaterListings(res?.data?.listing));
+            // console.log("res ok-", res.status);
+            if (res.status === 200) {
+                dispatch(setSavedForLaterListings(res?.data?.listing));
+            }
+
         } catch (error) {
             console.error(error);
         }
@@ -45,6 +49,7 @@ const ListingCard = ({ listing }) => {
         }
     }
 
+   
     return (
         <div className="border border-gray-300 p-4 flex flex-row  rounded-lg shadow-lg shadow-cyan-500/30">
             <div className="bg-gray-200  md:h-56 flex-1 items-center justify-center text-gray-500  rounded-lg">

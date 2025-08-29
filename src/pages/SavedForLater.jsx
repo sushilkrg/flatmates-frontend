@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import useGetSavedForLaterListings from "../hooks/useGetSavedForLaterListings";
 import Listings from "../components/Listings";

@@ -24,7 +24,7 @@ const listingSlice = createSlice({
       state.listings.push(action.payload);
     },
     deleteListing: (state, action) => {
-      state.listings = state.listings.filter(
+      state.listings = state?.listings.filter(
         (listing) => listing._id !== action.payload._id
       );
       state.myListings = state.myListings.filter(
@@ -39,24 +39,24 @@ const listingSlice = createSlice({
     },
     setSavedForLaterListings: (state, action) => {
       // state.savedForLaterListings = action.payload;
-      if (
-        state.savedForLaterListings.some(
-          (listing) => listing?._id === action.payload._id
-        )
-      ) {
-        // If the listing is already saved, remove it from the array
-        state.savedForLaterListings = state.savedForLaterListings.filter(
-          (listing) => listing?._id !== action.payload._id
-        );
+      // If action.payload is an array, refresh the entire savedForLaterListings list
+      if (Array.isArray(action.payload)) {
+        state.savedForLaterListings = action.payload;
       } else {
-        // If the listing is not in the array, add it to the saved list
-        state.savedForLaterListings = [
-          ...state.savedForLaterListings,
-          action.payload,
-        ];
-        // state.savedForLaterListings = action.payload;
+        // Toggle logic: add or remove a single listing based on user click
+        const exists = state.savedForLaterListings.some(
+          (listing) => listing?._id === action.payload._id
+        );
+        if (exists) {
+          state.savedForLaterListings = state.savedForLaterListings.filter(
+        (listing) => listing?._id !== action.payload._id
+          );
+        } else {
+          state.savedForLaterListings.push(action.payload);
+        }
       }
     },
+    
   },
 });
 
